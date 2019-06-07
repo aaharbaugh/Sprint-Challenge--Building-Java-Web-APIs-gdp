@@ -49,12 +49,14 @@ public class CountryController
     }
 
     // localhost:2019/country/table
-    @GetMapping(value = "/table")
+    @GetMapping(value = "economy/table")
     public ModelAndView displayCountryTable()
     {
+
+        DemoApplication.ourCountryList.countryList.sort((c1, c2) -> c1.getGdp() - c2.getGdp());
         ModelAndView mav = new ModelAndView();
         mav.setViewName("country");
-        mav.addObject("countryList", DemoApplication.ourCountryList.countryList);
+        mav.addObject("countrylist", DemoApplication.ourCountryList.countryList);
 
         return mav;
     }
