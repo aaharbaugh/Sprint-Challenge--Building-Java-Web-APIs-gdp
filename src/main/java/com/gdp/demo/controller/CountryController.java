@@ -96,4 +96,30 @@ public class CountryController
 
         return mav;
     }
+
+    // localhost:2019/gdp/list/{start}/{end}
+    @GetMapping(value = "list/{start}/{end}")
+    public ModelAndView displaySortedTable(@PathVariable int start, @PathVariable int end)
+    {
+
+        logger.info("list/" + start + "/" + end + " accessed");
+        MessageDetail message = new MessageDetail("list/" + start + "/" + end + " accessed", 7, false);
+
+        ArrayList<Country> limitedList = new ArrayList<Country>();
+
+        for(Country c : DemoApplication.ourCountryList.countryList)
+        {
+            if(c.getGdp() > start && c.getGdp() < end )
+            {
+                limitedList.add(c);
+            }
+        }
+
+        limitedList.sort((c1, c2) -> c1.getGdp() - c2.getGdp());
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("sortedcountry");
+        mav.addObject("countrylist", limitedList);
+
+        return mav;
+    }
 }
