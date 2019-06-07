@@ -82,7 +82,7 @@ public class CountryController
     }
 
     // localhost:2019/gdp/economy/table
-    @GetMapping(value = "economy/table")
+    @GetMapping(value = "/economy/table")
     public ModelAndView displayCountryTable()
     {
 
@@ -95,6 +95,28 @@ public class CountryController
         mav.addObject("countrylist", DemoApplication.ourCountryList.countryList);
 
         return mav;
+    }
+
+    //localhost:2019/gdp/total
+    @GetMapping(value = "/total")
+    public ResponseEntity<?> getTotalGdp()
+    {
+
+//        logger.info("/gdp/stats/median accessed");
+//        MessageDetail message = new MessageDetail("/gdp/stats/median accessed", 7, false);
+
+        DemoApplication.ourCountryList.countryList.sort((c1, c2) -> c1.getGdp() - c2.getGdp());
+        Integer total = 0;
+        ArrayList<Country> newArrayTotal = new ArrayList<Country>();
+
+        for(Country c : DemoApplication.ourCountryList.countryList)
+        {
+            total += c.getGdp();
+            newArrayTotal.add(c);
+        }
+        newArrayTotal.add( new Country("total", total));
+
+        return new ResponseEntity<>(newArrayTotal, HttpStatus.OK);
     }
 
     // localhost:2019/gdp/list/{start}/{end}
