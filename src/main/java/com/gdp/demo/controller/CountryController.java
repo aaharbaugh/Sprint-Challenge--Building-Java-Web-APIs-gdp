@@ -16,10 +16,19 @@ import java.util.ArrayList;
 @RequestMapping("/country")
 public class CountryController
 {
-    // localhost:8080/country/all
-    @GetMapping(value = "/all")
+    // localhost:8080/country/name
+    @GetMapping(value = "/name")
     public ResponseEntity<?> getAllCountries()
     {
+        DemoApplication.ourCountryList.countryList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
+        return new ResponseEntity<>(DemoApplication.ourCountryList.countryList, HttpStatus.OK);
+    }
+
+    // localhost:8080/country/economy
+    @GetMapping(value = "/economy")
+    public ResponseEntity<?> getAllCountriesByEconomy()
+    {
+        DemoApplication.ourCountryList.countryList.sort((c1, c2) -> c1.getGdp() - c2.getGdp());
         return new ResponseEntity<>(DemoApplication.ourCountryList.countryList, HttpStatus.OK);
     }
 
@@ -31,9 +40,17 @@ public class CountryController
         return new ResponseEntity<>(rtnCountry, HttpStatus.OK);
     }
 
+    // localhost:8080/country/stats/median
+    @GetMapping(value = "/stats/median")
+    public ResponseEntity<?> getMedianCountryGdp()
+    {
+        DemoApplication.ourCountryList.countryList.sort((c1, c2) -> c1.getGdp() - c2.getGdp());
+        return new ResponseEntity<>(DemoApplication.ourCountryList.countryList.get(DemoApplication.ourCountryList.countryList.size()/2), HttpStatus.OK);
+    }
+
     // localhost:2019/country/table
     @GetMapping(value = "/table")
-    public ModelAndView displayEmployeeTable()
+    public ModelAndView displayCountryTable()
     {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("country");

@@ -7,9 +7,9 @@ public class Country {
     private static final AtomicLong counter = new AtomicLong();
     private long id;
     private String name;
-    private long gdp;
+    private int gdp;
 
-    public Country(String name, long gdp) {
+    public Country(String name, int gdp) {
 
         this.id = counter.incrementAndGet();
         this.name = name;
@@ -32,11 +32,11 @@ public class Country {
         this.name = name;
     }
 
-    public long getGdp() {
+    public int getGdp() {
         return gdp;
     }
 
-    public void setGdp(long gdp) {
+    public void setGdp(int gdp) {
         this.gdp = gdp;
     }
 
