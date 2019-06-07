@@ -15,8 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.ArrayList;
 
 @RestController
@@ -81,7 +79,7 @@ public class CountryController
         return new ResponseEntity<>(DemoApplication.ourCountryList.countryList.get(DemoApplication.ourCountryList.countryList.size()/2), HttpStatus.OK);
     }
 
-    // localhost:2019/gdp/economy/table
+    // localhost:8080/gdp/economy/table
     @GetMapping(value = "/economy/table")
     public ModelAndView displayCountryTable()
     {
@@ -97,13 +95,13 @@ public class CountryController
         return mav;
     }
 
-    //localhost:2019/gdp/total
+    //localhost:8080/gdp/total
     @GetMapping(value = "/total")
     public ResponseEntity<?> getTotalGdp()
     {
 
-//        logger.info("/gdp/stats/median accessed");
-//        MessageDetail message = new MessageDetail("/gdp/stats/median accessed", 7, false);
+        logger.info("/gdp/total accessed");
+        MessageDetail message = new MessageDetail("/gdp/total accessed", 7, false);
 
         DemoApplication.ourCountryList.countryList.sort((c1, c2) -> c1.getGdp() - c2.getGdp());
         Integer total = 0;
@@ -119,7 +117,7 @@ public class CountryController
         return new ResponseEntity<>(newArrayTotal, HttpStatus.OK);
     }
 
-    // localhost:2019/gdp/list/{start}/{end}
+    // localhost:8080/gdp/list/{start}/{end}
     @GetMapping(value = "list/{start}/{end}")
     public ModelAndView displaySortedTable(@PathVariable int start, @PathVariable int end)
     {
