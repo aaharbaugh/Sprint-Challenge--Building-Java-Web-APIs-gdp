@@ -106,12 +106,11 @@ public class CountryController
         DemoApplication.ourCountryList.countryList.sort((c1, c2) -> c1.getGdp() - c2.getGdp());
         Integer total = 0;
         ArrayList<Country> newArrayTotal = new ArrayList<Country>();
-
         for(Country c : DemoApplication.ourCountryList.countryList)
         {
             total += c.getGdp();
-            newArrayTotal.add(c);
         }
+        newArrayTotal.clear();
         newArrayTotal.add( new Country("total", total));
 
         return new ResponseEntity<>(newArrayTotal, HttpStatus.OK);
